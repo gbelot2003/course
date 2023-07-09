@@ -1,0 +1,41 @@
+version: "3.4"
+services:
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - mysql
+    volumes:
+      - ./www:/var/www/html:Z
+    ports:
+      - 80:80
+
+  mysql:
+    container_name: mysql
+    image: mysql
+    restart: always
+    env_file: ./.env
+    environment:
+      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+      - MYSQL_DATABASE=$MYSQL_DATABASE
+      - MYSQL_USER=$MYSQL_USER
+      - MYSQL_PASSWORD=$MYSQL_PASSWORD
+    ports:
+      - 3306:3306
+    volumes:
+      - ./db:/var/lib/mysql
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    environment:
+      - PMA_HOSTS=mysql
+    depends_on:
+      - mysql
+    ports:
+      - 8080:80
+
+volumes:
+  mysql:
+    driver: local
