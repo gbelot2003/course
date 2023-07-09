@@ -1,6 +1,6 @@
 <?php
 
-class Post
+class Post extends Controller
 {
     public function __construct()
     {
@@ -19,6 +19,6 @@ class Post
 
     public function edit($id)
     {
-        echo "Este es post " . $id;
+        $this->view('hello');
     }
 }
