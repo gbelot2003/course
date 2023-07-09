@@ -1,1 +1,3 @@
-<h1>Hola servidor</h1>
+<?php
+
+require_once '../bootstrap.php';
